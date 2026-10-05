@@ -39,10 +39,11 @@ flowchart LR
 
 ### Modo de merge
 
-| Destino | Botão no GitHub | Por quê |
-|---|---|---|
-| `qa` | **Create a merge commit** | Preserva os commits da branch, o que evita conflitos se a mesma branch voltar para a `qa` com ajustes |
-| `main` | **Squash and merge** | Um commit por entrega na produção: histórico limpo e reversão simples |
+**Sempre *Create a merge commit*, na `qa` e na `main`.** Squash e rebase ficam desligados.
+
+Por quê: a mesma branch vai para a `qa` e depois para a `main`. Com merge commit nas duas, as duas recebem **os mesmos commits**, e o Git sempre encontra o ponto em comum entre elas. Com squash na `main`, ela recebia um commit novo com o mesmo conteúdo, os históricos se separavam e quase todo PR seguinte para a `qa` dava conflito.
+
+Para reverter uma entrega na `main`: `git revert -m 1 <commit de merge>`, em uma branch, por PR.
 
 ## Regras de ouro
 
@@ -56,7 +57,7 @@ flowchart LR
   git push -u origin feat/M15-env-example-qa
   ```
   Abra o PR da **branch auxiliar** para `qa`. A branch original continua limpa e é ela que vai para a `main`. Apague a auxiliar depois do merge.
-- **Conflito no PR para `main`:** atualize sua branch com a `main` (`git merge origin/main` ou `git rebase origin/main`) e envie de novo.
+- **Conflito no PR para `main`:** atualize sua branch com a `main` (`git merge origin/main`) e envie de novo. Não use `rebase` em uma branch que já foi para a `qa`: ele recria os commits, e a `main` e a `qa` voltam a ter históricos diferentes.
 - Nunca use `push --force` em `main` ou `qa` (o GitHub bloqueia).
 
 ## Hotfix (exceção)
@@ -104,7 +105,7 @@ Exemplos:
 ## Pull Requests
 
 - Use o template (aparece automaticamente ao abrir o PR).
-- Título no formato dos commits (`tipo(escopo): descrição [IDs]`). No merge para a `main` (squash), o título e a descrição do PR viram a mensagem do commit.
+- Título no formato dos commits (`tipo(escopo): descrição [IDs]`). Ele aparece no commit de merge e é o que identifica a entrega no histórico da `main`.
 - Um PR por entrega, pequeno o bastante para ser revisado com atenção.
 - Descreva em poucas linhas o que mudou e quais itens do plano resolve.
 - Quem aprova o PR para `main` não pode ser o autor.

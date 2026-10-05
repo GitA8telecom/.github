@@ -1,4 +1,4 @@
-<!-- Título no formato do commit: tipo(escopo): descrição [IDs]. No merge para a main (squash), título e descrição viram a mensagem do commit. -->
+<!-- Título no formato do commit: tipo(escopo): descrição [IDs]. Ele identifica a entrega no histórico (commit de merge). -->
 
 ## O que muda
 
