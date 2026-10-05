@@ -104,8 +104,9 @@ Exemplos:
 ## Pull Requests
 
 - Use o template (aparece automaticamente ao abrir o PR).
+- Título no formato dos commits (`tipo(escopo): descrição [IDs]`). No merge para a `main` (squash), o título e a descrição do PR viram a mensagem do commit.
 - Um PR por entrega, pequeno o bastante para ser revisado com atenção.
-- Descreva o que mudou, por quê, como testar e quais itens do plano resolve.
+- Descreva em poucas linhas o que mudou e quais itens do plano resolve.
 - Quem aprova o PR para `main` não pode ser o autor.
 
 ## Segurança e dados
